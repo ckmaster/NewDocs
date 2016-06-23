@@ -1,0 +1,8 @@
+c:\users\ckidd\documents\visual studio 2015\Projects\FindNewDocs\FindNewDocs\bin\Debug\FindNewDocs.exe.config
+c:\users\ckidd\documents\visual studio 2015\Projects\FindNewDocs\FindNewDocs\bin\Debug\FindNewDocs.exe
+c:\users\ckidd\documents\visual studio 2015\Projects\FindNewDocs\FindNewDocs\bin\Debug\FindNewDocs.pdb
+c:\users\ckidd\documents\visual studio 2015\Projects\FindNewDocs\FindNewDocs\bin\Debug\RestSharp.dll
+c:\users\ckidd\documents\visual studio 2015\Projects\FindNewDocs\FindNewDocs\bin\Debug\RestSharp.xml
+c:\users\ckidd\documents\visual studio 2015\Projects\FindNewDocs\FindNewDocs\obj\Debug\FindNewDocs.csprojResolveAssemblyReference.cache
+c:\users\ckidd\documents\visual studio 2015\Projects\FindNewDocs\FindNewDocs\obj\Debug\FindNewDocs.exe
+c:\users\ckidd\documents\visual studio 2015\Projects\FindNewDocs\FindNewDocs\obj\Debug\FindNewDocs.pdb
