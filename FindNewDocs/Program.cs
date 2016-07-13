@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using RestSharp;
 using System.IO;
+using Newtonsoft;
+using Newtonsoft.Json;
 
 namespace FindNewDocs
 {
@@ -12,42 +14,40 @@ namespace FindNewDocs
     {
         static void Main (string[] args)
         {
+            string lastRun = "";
+            using (StreamReader sr = new StreamReader(".\\LastRun.txt"))
+            {
+                lastRun = sr.ReadLine();
+            }
+
+            //Add 5 hours to account for GMT
+            string currentRun = String.Format("{0:yyyy'-'MM'-'dd HH':'mm':'ss'.'fffff}", DateTime.Now.AddHours(5));
+            using (StreamWriter sw = new StreamWriter(".\\LastRun.txt"))
+            {
+                sw.WriteLine(currentRun);
+            }
+
             RestClient client = new RestClient("http://localhost:8080/integrationserver/view/321Z06Q_000B6R6WY000001/result?category=DOCUMENT");
             RestRequest request = new RestRequest(Method.POST);
-            request.AddHeader("content-type", "application/xml");
             request.AddHeader("x-integrationserver-password", "dwa");
             request.AddHeader("x-integrationserver-username", "ckidd");
-            request.AddParameter("application/xml", 
-                "<viewParameters><vslText>[creationDate] > '2016-06-21 05:00:00.000000'</vslText></viewParameters>", ParameterType.RequestBody);
+            request.AddParameter("application/xml",
+                $"<viewParameters><vslText>[creationDate] > '{lastRun}'</vslText></viewParameters>", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
             string hash = response.Headers[0].Value.ToString();
-            string view = response.Content;
-            string[] delims = { "\"value\":\"", "\"},{\"" };
-            string[] split = view.Split(delims, StringSplitOptions.None);
-            string newestDoc = split[1];
 
-            string previousDoc = "";
-            using (StreamReader sr = new StreamReader(".\\DocID.txt"))
-            {
-                previousDoc = sr.ReadLine();
-            }
+            root root = JsonConvert.DeserializeObject<root>(response.Content);
 
             using (StreamWriter sw = new StreamWriter(".\\DocID.txt"))
             {
-                sw.WriteLine(newestDoc);
+                foreach (resultRows r in root.resultRows)
+                {
+                    string tempId = r.fields[0].value;
+                    sw.WriteLine(tempId);
+                }
             }
-
-            if (!previousDoc.Equals(newestDoc))
-            {
-                Console.WriteLine("A new document has been added to the system since the last run:  " + newestDoc);
-            }
-            else
-            {
-                Console.WriteLine("No new documents have been added since the last run.  The newest doc is:  " + previousDoc);
-            }
-
+            
             EndRun(hash);
-            Console.ReadLine();
         }
 
         public static void EndRun(string hash)
@@ -59,5 +59,21 @@ namespace FindNewDocs
             request.AddHeader("x-integrationserver-username", "ckidd");
             IRestResponse response = client.Execute(request);
         }
+    }
+
+    class fields
+    {
+        public string columnId { get; set; }
+        public string value { get; set; }
+    }
+
+    class resultRows
+    {
+        public List<fields> fields { get; set; } = new List<fields>();
+    }
+
+    class root
+    {
+        public List<resultRows> resultRows { get; set; } = new List<resultRows>();
     }
 }

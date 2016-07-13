@@ -6,3 +6,5 @@ c:\users\ckidd\documents\visual studio 2015\Projects\FindNewDocs\FindNewDocs\bin
 c:\users\ckidd\documents\visual studio 2015\Projects\FindNewDocs\FindNewDocs\obj\Debug\FindNewDocs.csprojResolveAssemblyReference.cache
 c:\users\ckidd\documents\visual studio 2015\Projects\FindNewDocs\FindNewDocs\obj\Debug\FindNewDocs.exe
 c:\users\ckidd\documents\visual studio 2015\Projects\FindNewDocs\FindNewDocs\obj\Debug\FindNewDocs.pdb
+C:\Users\ckidd\Documents\Visual Studio 2015\Projects\FindNewDocs\FindNewDocs\bin\Debug\Newtonsoft.Json.dll
+C:\Users\ckidd\Documents\Visual Studio 2015\Projects\FindNewDocs\FindNewDocs\bin\Debug\Newtonsoft.Json.xml
